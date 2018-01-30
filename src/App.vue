@@ -20,10 +20,12 @@
       <button @click.prevent="create" class="btn btn-primary">Create</button>
     </form>
     <hr />
-    <p v-if="loading">Loading ...</p>
-    <ul v-else>
-      <li v-for="tweet in tweets" :key="tweet._id">
-        {{ tweet.content }} - {{ tweet.author.firstname }} {{ tweet.author.lastname }}
+    <div class="progress" v-if="loading">
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+    </div>
+    <ul v-else class="list-group">
+      <li v-for="tweet in tweets" :key="tweet._id" class="list-group-item">
+        {{ tweet.content }} - {{ tweet.location }} - {{ tweet.author.firstname }} {{ tweet.author.lastname }}
       </li>
     </ul>
   </div>
@@ -54,7 +56,7 @@ export default {
   methods: {
     _loadTweets(){
       axios.get(`${config.baseURL}/tweets`,{
-        withCredentials: false
+        withCredentials: true
       })
       .then( response => {
         this.loading = false;
@@ -63,21 +65,21 @@ export default {
     },
     _loadAuthors(){
       axios.get(`${config.baseURL}/authors`,{
-        withCredentials: false
+        withCredentials: true
       })
       .then( response => {
-        this.authors = response.data.data;
+        this.authors = response.data.users;
       })
     },
     create(){
-      
+
       let payload = "";
       Object.keys(this.tweet).forEach(key => {
         payload+=`${key}=${this.tweet[key]}&`
       });
-      
+
       axios.post(`${config.baseURL}/tweets`, payload, {
-        withCredentials: false,
+        withCredentials: true,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
