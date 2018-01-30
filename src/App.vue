@@ -72,12 +72,12 @@ export default {
       })
     },
     create(){
-
+      
       let payload = "";
       Object.keys(this.tweet).forEach(key => {
         payload+=`${key}=${this.tweet[key]}&`
       });
-
+      
       axios.post(`${config.baseURL}/tweets`, payload, {
         withCredentials: true,
         headers: {
