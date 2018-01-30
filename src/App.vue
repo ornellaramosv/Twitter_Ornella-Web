@@ -19,16 +19,29 @@
       </div>
       <button @click.prevent="create" class="btn btn-primary">Create</button>
     </form>
-    <hr />
+    </br>
+    <h1>Posts</h1>
     <div class="progress" v-if="loading">
       <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
     </div>
-    
-    <ul v-else class="list-group">
-      <li v-for="tweet in tweets" :key="tweet._id" class="list-group-item">
-        {{ tweet.content }} - {{ tweet.location }} - {{ tweet.author.firstname }} {{ tweet.author.lastname }} - {{ tweet.author.createdAt }}
-      </li>
-    </ul>
+    <table v-else class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Content</th>
+          <th scope="col">Location</th>
+          <th scope="col">User</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="tweet in tweets" :key="tweet._id">
+          <th scope="row">{{ tweet.content }}</th>
+          <td>{{ tweet.location }}</td>
+          <td>{{ tweet.author.firstname }} {{ tweet.author.lastname }}</td>
+          <td>{{ tweet.author.createdAt }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
